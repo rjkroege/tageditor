@@ -1,0 +1,20 @@
+Edit X:tageditor/\+Errors: 1,$d
+X:tageditor/.*\.swift: w
+
+# Setup a library
+swift package init
+
+# Setup an executable
+swift package init --type executable
+
+# Build
+swift build
+
+# Test
+swift test
+
+# Run
+swift run
+
+# NB: binary is here.
+./.build/arm*/debug/tageditor
