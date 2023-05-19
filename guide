@@ -14,7 +14,22 @@ swift build
 swift test
 
 # Run
-swift run
+swift run  tageditor -c Robert  foobar giant 02_Raisin_Exercise.mp3 /Users/rjkroege/wrks/docslocal/parents/audio-books/A_Courtesans_Scandal/*
+
+swift run  tageditor -u --title 'Raisin Exercise' 02_Raisin_Exercise.mp3
+
+
+
+# Format
+swift-format -i -r Sources
+Edit X/\.(swift)$/ e
 
 # NB: binary is here.
 ./.build/arm*/debug/tageditor
+
+
+# Questions
+
+* [x] prettyprinting Swift code
+	* [x] build https://github.com/apple/swift-format
+
