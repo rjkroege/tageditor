@@ -27,8 +27,7 @@ struct TagEditor: ParsableCommand {
   @Option(name: .long, help: "Total Tracks")
   var numtracks: Int?
 
-	// TODO(rjk): Handle pictures.
-
+  // TODO(rjk): Handle pictures.
 
   // They would become mandatory optional if I didn't mark it with a ?
   @Option(name: .shortAndLong, help: "Second name")
@@ -51,4 +50,3 @@ struct TagEditor: ParsableCommand {
     }
   }
 }
-

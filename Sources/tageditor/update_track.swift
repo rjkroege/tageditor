@@ -40,6 +40,7 @@ func updateTrackName(context: TagEditor, trackname: String) {
   // Strictly speaking... I could make this not be mutable? Is there a nicer way?
   // Sure? A function? Returns
   let id3Tag = maybebuilder!
+    .album(ctx: context)
     .title(ctx: context)
     .build()
 

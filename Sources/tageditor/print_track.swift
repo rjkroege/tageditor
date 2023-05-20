@@ -25,6 +25,4 @@ func perTrack(trackname: String) {
     // There's no need to bother with this if the the file isn't an mp3?
     print(error)
   }
-
 }
-

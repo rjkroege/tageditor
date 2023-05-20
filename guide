@@ -14,11 +14,11 @@ swift build
 swift test
 
 # Run
-swift run  tageditor -c Robert  foobar giant 02_Raisin_Exercise.mp3 /Users/rjkroege/wrks/docslocal/parents/audio-books/A_Courtesans_Scandal/*
+swift run  tageditor  foobar  02_Raisin_Exercise.mp3 /Users/rjkroege/wrks/docslocal/parents/audio-books/A_Courtesans_Scandal/*
 
-swift run  tageditor -u --title 'Raisin Exercise' 02_Raisin_Exercise.mp3
+swift run  tageditor -u --album 'The Mindful Way Workbook' 02_Raisin_Exercise.mp3
 
-
+swift run tageditor --help
 
 # Format
 swift-format -i -r Sources
