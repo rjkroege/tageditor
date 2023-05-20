@@ -6,12 +6,11 @@ import ID3TagEditor
 // A protocol is an
 protocol LCDTagBuilder {
   func title(ctx: TagEditor) -> Self
+	func title(frame: ID3FrameWithStringContent) -> Self
   func build() -> ID3Tag
 }
 
-// TODO(rjk): why do I needz to write identical code 3x?
-// I need to use an extension to say that the package's TabBuilder implementations satisfy my LCD protocol.
-extension ID32v2TagBuilder: LCDTagBuilder {
+extension LCDTagBuilder {
   func title(ctx: TagEditor) -> Self {
     if let t = ctx.title {
       return self.title(frame: ID3FrameWithStringContent(content: t))
@@ -20,20 +19,7 @@ extension ID32v2TagBuilder: LCDTagBuilder {
   }
 }
 
-extension ID32v3TagBuilder: LCDTagBuilder {
-  func title(ctx: TagEditor) -> Self {
-    if let t = ctx.title {
-      return self.title(frame: ID3FrameWithStringContent(content: t))
-    }
-    return self
-  }
-}
 
-extension ID32v4TagBuilder: LCDTagBuilder {
-  func title(ctx: TagEditor) -> Self {
-    if let t = ctx.title {
-      return self.title(frame: ID3FrameWithStringContent(content: t))
-    }
-    return self
-  }
-}
+extension ID32v2TagBuilder: LCDTagBuilder {}
+extension ID32v3TagBuilder: LCDTagBuilder {}
+extension ID32v4TagBuilder: LCDTagBuilder {}

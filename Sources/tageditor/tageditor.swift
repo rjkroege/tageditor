@@ -17,8 +17,20 @@ struct TagEditor: ParsableCommand {
   @Option(name: .long, help: "Artist")
   var artist: String?
 
-  @Option(name: .long, help: "Title")
+  @Option(name: .long, help: "Track name aka title")
   var title: String?
+
+  @Option(name: .long, help: "Album name")
+  var album: String?
+
+  @Option(name: .long, help: "Track")
+  var track: Int?
+
+  @Option(name: .long, help: "Total Tracks")
+  var numtracks: Int?
+
+	// TODO(rjk): Handle pictures.
+
 
   // They would become mandatory optional if I didn't mark it with a ?
   @Option(name: .shortAndLong, help: "Second name")
