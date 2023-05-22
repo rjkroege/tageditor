@@ -5,6 +5,7 @@ import ID3TagEditor
 // What is the Self?
 // A protocol is an
 protocol LCDTagBuilder {
+  func build(startingtag: ID3Tag) -> ID3Tag
   func build() -> ID3Tag
 
   func title(ctx: TagEditor) -> Self
@@ -28,8 +29,16 @@ extension LCDTagBuilder {
     }
     return self
   }
+
+  func build(startingtag: ID3Tag) -> ID3Tag {
+    let tag = self.build()
+    tag.frames = tag.frames.merging(startingtag.frames) { (current, _) in current }
+    return tag
+  }
 }
 
 extension ID32v2TagBuilder: LCDTagBuilder {}
+
 extension ID32v3TagBuilder: LCDTagBuilder {}
+
 extension ID32v4TagBuilder: LCDTagBuilder {}
