@@ -1,5 +1,4 @@
 import Foundation
-
 // [ID3TagEditor – Swift Package Index](https://swiftpackageindex.com/chicio/ID3TagEditor)
 import ID3TagEditor
 
@@ -58,29 +57,29 @@ func buildPictureFrame(context: TagEditor) -> ID3FrameAttachedPicture? {
     return nil
   }
 
-	// This changes in 13.3+
-	let url = URL(fileURLWithPath: pf)
-	print("url \(url)")
+  // This changes in 13.3+
+  let url = URL(fileURLWithPath: pf)
+  print("url \(url)")
 
-	guard  let ptype = getPtype(ext: url.pathExtension) else {
-		return nil
-	}
+  guard let ptype = getPtype(ext: url.pathExtension) else {
+    return nil
+  }
 
-	guard let data = try?  Data(contentsOf: url) else {
-		return nil
-	}
+  guard let data = try? Data(contentsOf: url) else {
+    return nil
+  }
 
-	return ID3FrameAttachedPicture(picture: data, type:ID3PictureType.frontCover, format:ptype)
+  return ID3FrameAttachedPicture(picture: data, type: ID3PictureType.frontCover, format: ptype)
 }
 
 func getPtype(ext: String) -> ID3PictureFormat? {
-	print("the extension: \(ext)")
-	switch ext {
-	case "png":
-		return ID3PictureFormat.png
-	case "jpeg", "jpg":
-		return ID3PictureFormat.jpeg
-	default:
-		return nil
-	}
+  print("the extension: \(ext)")
+  switch ext {
+  case "png":
+    return ID3PictureFormat.png
+  case "jpeg", "jpg":
+    return ID3PictureFormat.jpeg
+  default:
+    return nil
+  }
 }
