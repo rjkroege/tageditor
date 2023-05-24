@@ -13,6 +13,18 @@ protocol LCDTagBuilder {
 
   func album(ctx: TagEditor) -> Self
   func album(frame: ID3FrameWithStringContent) -> Self
+
+  func artist(ctx: TagEditor) -> Self
+  func artist(frame: ID3FrameWithStringContent) -> Self
+
+  func trackPosition(ctx: TagEditor) -> Self
+  func trackPosition(frame: ID3FramePartOfTotal) -> Self
+
+  func genre(ctx: TagEditor) -> Self
+  func genre(frame: ID3FrameGenre) -> Self
+
+  func attachedPicture(pictureframe: ID3FrameAttachedPicture?) -> Self
+  func attachedPicture(pictureType: ID3PictureType, frame: ID3FrameAttachedPicture) -> Self
 }
 
 extension LCDTagBuilder {
@@ -26,6 +38,36 @@ extension LCDTagBuilder {
   func title(ctx: TagEditor) -> Self {
     if let t = ctx.title {
       return self.title(frame: ID3FrameWithStringContent(content: t))
+    }
+    return self
+  }
+
+  func artist(ctx: TagEditor) -> Self {
+    if let t = ctx.artist {
+      return self.artist(frame: ID3FrameWithStringContent(content: t))
+    }
+    return self
+  }
+
+  func trackPosition(ctx: TagEditor) -> Self {
+    if let i = ctx.track, let n = ctx.numtracks {
+      return self.trackPosition(frame: ID3FramePartOfTotal(part: i, total: n))
+    }
+    return self
+  }
+
+  func genre(ctx: TagEditor) -> Self {
+    if let t = ctx.genre {
+      // I am supporting only the custom genres.
+      return self.genre(frame: ID3FrameGenre(genre: nil, description: t))
+    }
+    return self
+  }
+
+  func attachedPicture(pictureframe: ID3FrameAttachedPicture?) -> Self {
+    if let t = pictureframe {
+      // Only the front cover.
+      return self.attachedPicture(pictureType: .frontCover, frame: t)
     }
     return self
   }

@@ -1,9 +1,12 @@
+import Foundation
+
 // [ID3TagEditor – Swift Package Index](https://swiftpackageindex.com/chicio/ID3TagEditor)
 import ID3TagEditor
 
 // Observation: it *replaces* all of the tags. All of them. But I don't want this.
-// I want to update the
-func updateTrackName(context: TagEditor, trackname: String) {
+// updateTrackName
+func updateTrackName(context: TagEditor, trackname: String, pictureframe: ID3FrameAttachedPicture?)
+{
   // This is a protocol. We make a different kind based on the tag version.
   var maybebuilder: LCDTagBuilder?
 
@@ -30,6 +33,10 @@ func updateTrackName(context: TagEditor, trackname: String) {
       let nid3Tag = maybebuilder!
         .album(ctx: context)
         .title(ctx: context)
+        .artist(ctx: context)
+        .trackPosition(ctx: context)
+        .genre(ctx: context)
+        .attachedPicture(pictureframe: pictureframe)
         .build(startingtag: id3Tag)
 
       // NB: the file has to already exist.
@@ -42,4 +49,38 @@ func updateTrackName(context: TagEditor, trackname: String) {
     // TODO(rjk): I should (carefully) match the errors with pattern matching.
     print(error)
   }
+}
+
+// builds an ID3FrameAttachedPicture from state in context. Returns it
+// because context would be immutable in this context. (Passed by "value").
+func buildPictureFrame(context: TagEditor) -> ID3FrameAttachedPicture? {
+  guard let pf = context.picture else {
+    return nil
+  }
+
+	// This changes in 13.3+
+	let url = URL(fileURLWithPath: pf)
+	print("url \(url)")
+
+	guard  let ptype = getPtype(ext: url.pathExtension) else {
+		return nil
+	}
+
+	guard let data = try?  Data(contentsOf: url) else {
+		return nil
+	}
+
+	return ID3FrameAttachedPicture(picture: data, type:ID3PictureType.frontCover, format:ptype)
+}
+
+func getPtype(ext: String) -> ID3PictureFormat? {
+	print("the extension: \(ext)")
+	switch ext {
+	case "png":
+		return ID3PictureFormat.png
+	case "jpeg", "jpg":
+		return ID3PictureFormat.jpeg
+	default:
+		return nil
+	}
 }
